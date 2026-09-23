@@ -9,6 +9,14 @@
     />
     <title>AVR ateliê — Arte que eterniza memórias</title>
 
+    <!-- Segurança: restringe de onde o site pode carregar scripts/estilos/imagens e para onde pode enviar dados -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' data: blob: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self' 'unsafe-inline'; form-action https://formsubmit.co; frame-ancestors 'none'; base-uri 'self'; object-src 'none'"
+    />
+    <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,15 +26,15 @@
 
     <style>
       :root {
-        --paper: #f3ede2;
-        --paper-deep: #e4d6c3;
-        --ink: #332a23;
-        --muted: #7f6d5d;
-        --clay: #987052;
-        --clay-dark: #6e4c37;
-        --wood: #624432;
-        --line: rgba(98, 68, 50, 0.2);
-        --white: #fffaf2;
+        --paper: #f7f5f0;
+        --paper-deep: #eae3d9;
+        --ink: #3a2e2b;
+        --muted: #756a63;
+        --clay: #9a8c7d;
+        --clay-dark: #66735f;
+        --wood: #7b8874;
+        --line: rgba(58, 46, 43, 0.2);
+        --white: #fffdf8;
         --serif: "Bodoni Moda", Georgia, serif;
         --sans: "DM Sans", Arial, sans-serif;
         --ease: cubic-bezier(0.23, 1, 0.32, 1);
@@ -44,7 +52,7 @@
         margin: 0;
         color: var(--ink);
         background:
-          radial-gradient(circle at 12% 15%, rgba(255, 250, 242, 0.72), transparent 28rem),
+          radial-gradient(circle at 12% 15%, rgba(255, 253, 248, 0.82), transparent 28rem),
           var(--paper);
         font-family: var(--sans);
         -webkit-font-smoothing: antialiased;
@@ -148,14 +156,14 @@
         margin: 22px 0 20px;
         font-family: var(--serif);
         font-size: clamp(4.3rem, 8vw, 8rem);
-        font-weight: 500;
+        font-weight: 600;
         letter-spacing: -0.06em;
         line-height: 0.8;
       }
 
       .hero h1 em {
         color: var(--clay-dark);
-        font-weight: 400;
+        font-weight: 500;
       }
 
       .hero-subtitle {
@@ -826,7 +834,7 @@
         border: 1px solid var(--line);
         border-radius: 0;
         outline: none;
-        background: #fcf7ef;
+        background: #f2eee8;
         font: inherit;
         font-size: 0.82rem;
       }
@@ -872,7 +880,7 @@
         place-items: center;
         color: var(--muted);
         border: 1px dashed rgba(98, 68, 50, 0.42);
-        background: #fcf7ef;
+        background: #f2eee8;
         text-align: center;
         cursor: pointer;
         transition: border-color 180ms ease, background 180ms ease;
@@ -881,7 +889,7 @@
       .upload-zone:hover,
       .upload-zone:focus-within {
         border-color: var(--wood);
-        background: #f8efe2;
+        background: #eee8df;
       }
 
       .upload-zone input {
@@ -1268,6 +1276,86 @@
           transition-duration: 0.01ms !important;
         }
       }
+
+      /* Refinamentos de leitura e espaçamento */
+      .hero h1 {
+        line-height: 0.9;
+        letter-spacing: -0.05em;
+      }
+
+      .hero-text,
+      .contact-aside p,
+      .faq-answer,
+      .step p {
+        max-width: 42ch;
+        line-height: 1.65;
+      }
+
+      .gallery-section,
+      .info-section,
+      .contact-section,
+      .faq-section {
+        padding-top: clamp(90px, 12vw, 160px);
+        padding-bottom: clamp(90px, 12vw, 160px);
+      }
+
+      .gallery-card figcaption span:first-child {
+        color: var(--ink);
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .gallery-card figcaption span:last-child {
+        margin-top: 5px;
+        font-size: 0.7rem;
+        letter-spacing: 0.08em;
+      }
+
+      .nav a {
+        font-size: 0.74rem;
+        letter-spacing: 0.1em;
+      }
+
+      .button {
+        min-height: 52px;
+        padding-right: 22px;
+        padding-left: 22px;
+        font-size: 0.75rem;
+        letter-spacing: 0.06em;
+      }
+
+      .form-field input,
+      .form-field select,
+      .form-field textarea {
+        min-height: 50px;
+        padding: 13px 14px;
+      }
+
+      .faq-item[open] summary {
+        color: var(--clay-dark);
+      }
+
+      .faq-item[open] {
+        border-color: var(--wood);
+      }
+
+      @media (max-width: 600px) {
+        .hero h1 {
+          font-size: clamp(3.6rem, 16vw, 8rem);
+        }
+
+        .whatsapp-float span {
+          display: none;
+        }
+
+        .whatsapp-float {
+          width: 52px;
+          height: 52px;
+          min-height: 52px;
+          padding: 0;
+          justify-content: center;
+        }
+      }
     </style>
   </head>
 
@@ -1492,10 +1580,25 @@
           Conte um pouquinho sobre o que você imaginou, informe a quantidade de imagens e veja as prévias antes de continuar.
         </p>
 
-        <form class="quote-form" id="quote-form">
+        <form
+          class="quote-form"
+          id="quote-form"
+          action="https://formsubmit.co/ribasanacarvalho@gmail.com"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <input type="hidden" name="_subject" value="Novo pedido de orçamento — AVr Atelier" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_captcha" value="true" />
+          <input type="hidden" name="_next" value="https://bbp8-brn6.github.io/AVr-Atelier/" />
           <div class="form-field">
             <label for="quote-name">Seu nome</label>
             <input id="quote-name" name="nome" type="text" autocomplete="name" placeholder="Como podemos te chamar?" required />
+          </div>
+
+          <div class="form-field">
+            <label for="quote-email">Seu e-mail</label>
+            <input id="quote-email" name="email" type="email" autocomplete="email" placeholder="Para retornarmos seu orçamento" required />
           </div>
 
           <div class="form-field">
@@ -1517,10 +1620,10 @@
           <div class="form-field">
             <label for="quote-images">Envie suas imagens</label>
             <label class="upload-zone" for="quote-images">
-              <input id="quote-images" name="imagens" type="file" accept="image/*" multiple />
+              <input id="quote-images" name="attachment" type="file" accept="image/jpeg,image/png,image/webp" multiple />
               <span class="upload-copy">
                 <strong>Escolher imagens</strong>
-                <span>JPG, PNG ou WEBP · você pode selecionar várias</span>
+                <span>JPG, PNG ou WEBP · várias imagens · até 10 MB</span>
               </span>
             </label>
             <div class="image-preview-grid" id="image-preview-grid" aria-live="polite"></div>
@@ -1533,9 +1636,9 @@
           </div>
 
           <button class="button quote-submit" type="submit">
-            Continuar pelo WhatsApp <span class="arrow" aria-hidden="true">↗</span>
+            Enviar orçamento por e-mail <span class="arrow" aria-hidden="true">↗</span>
           </button>
-          <p class="form-note">A mensagem será aberta no WhatsApp com os nomes dos arquivos. Anexe as imagens selecionadas na conversa antes de enviar.</p>
+          <p class="form-note">Os dados e as imagens selecionadas serão enviados para o e-mail do AVr Atelier. O FormSubmit pode pedir uma confirmação no primeiro envio.</p>
         </form>
       </div>
     </div>
@@ -1559,121 +1662,178 @@
     </footer>
 
     <script>
-      const quoteModal = document.querySelector("#quote-modal");
-      const quoteForm = document.querySelector("#quote-form");
-      const openQuoteButtons = document.querySelectorAll(".js-open-quote");
-      const closeQuoteButton = document.querySelector(".js-close-quote");
-      const quoteName = document.querySelector("#quote-name");
-      const imageInput = document.querySelector("#quote-images");
-      const previewGrid = document.querySelector("#image-preview-grid");
-      const imageCountNote = document.querySelector("#image-count-note");
-      const whatsappNumber = "5527992322933"; // Substitua pelo número com DDI e DDD.
+      // Tudo roda dentro de DOMContentLoaded e cada recurso é isolado em seu próprio
+      // try/catch: se um elemento estiver ausente ou algo falhar em uma parte,
+      // as demais partes (modal, FAQ, lightbox, comparador) continuam funcionando
+      // normalmente. Antes, um único elemento ausente travava o script inteiro
+      // e nenhum listener era registrado — provável causa de "opções" não abrirem.
+      document.addEventListener("DOMContentLoaded", () => {
+        const MAX_FILE_SIZE_MB = 10;
+        const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"];
 
-      function openQuoteModal() {
-        quoteModal.classList.add("is-open");
-        quoteModal.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-        window.setTimeout(() => quoteName.focus(), 100);
-      }
+        // --- Modal de orçamento ---
+        try {
+          const quoteModal = document.querySelector("#quote-modal");
+          const quoteForm = document.querySelector("#quote-form");
+          const openQuoteButtons = document.querySelectorAll(".js-open-quote");
+          const closeQuoteButton = document.querySelector(".js-close-quote");
+          const quoteName = document.querySelector("#quote-name");
 
-      function closeQuoteModal() {
-        quoteModal.classList.remove("is-open");
-        quoteModal.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-      }
+          if (quoteModal && openQuoteButtons.length) {
+            const openQuoteModal = () => {
+              quoteModal.classList.add("is-open");
+              quoteModal.setAttribute("aria-hidden", "false");
+              document.body.style.overflow = "hidden";
+              window.setTimeout(() => quoteName && quoteName.focus(), 100);
+            };
 
-      openQuoteButtons.forEach((button) => button.addEventListener("click", openQuoteModal));
-      closeQuoteButton.addEventListener("click", closeQuoteModal);
+            const closeQuoteModal = () => {
+              quoteModal.classList.remove("is-open");
+              quoteModal.setAttribute("aria-hidden", "true");
+              document.body.style.overflow = "";
+            };
 
-      quoteModal.addEventListener("click", (event) => {
-        if (event.target === quoteModal) closeQuoteModal();
-      });
+            openQuoteButtons.forEach((button) => button.addEventListener("click", openQuoteModal));
+            if (closeQuoteButton) closeQuoteButton.addEventListener("click", closeQuoteModal);
 
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && quoteModal.classList.contains("is-open")) {
-          closeQuoteModal();
+            quoteModal.addEventListener("click", (event) => {
+              if (event.target === quoteModal) closeQuoteModal();
+            });
+
+            document.addEventListener("keydown", (event) => {
+              if (event.key === "Escape" && quoteModal.classList.contains("is-open")) {
+                closeQuoteModal();
+              }
+            });
+          }
+
+          // --- Upload e prévia de imagens (com validação de tipo/tamanho) ---
+          const imageInput = document.querySelector("#quote-images");
+          const previewGrid = document.querySelector("#image-preview-grid");
+          const imageCountNote = document.querySelector("#image-count-note");
+
+          if (imageInput && previewGrid && imageCountNote) {
+            imageInput.addEventListener("change", () => {
+              previewGrid.innerHTML = "";
+              const allFiles = Array.from(imageInput.files || []);
+              const validFiles = [];
+              const rejected = [];
+
+              allFiles.forEach((file) => {
+                const isTypeOk = ALLOWED_TYPES.includes(file.type);
+                const isSizeOk = file.size <= MAX_FILE_SIZE_MB * 1024 * 1024;
+                if (isTypeOk && isSizeOk) {
+                  validFiles.push(file);
+                } else {
+                  rejected.push(file.name);
+                }
+              });
+
+              validFiles.forEach((file) => {
+                const preview = document.createElement("div");
+                preview.className = "image-preview";
+                const image = document.createElement("img");
+                const objectUrl = URL.createObjectURL(file);
+                image.src = objectUrl;
+                image.alt = `Prévia de ${file.name}`;
+                image.onload = () => URL.revokeObjectURL(objectUrl);
+                preview.appendChild(image);
+                previewGrid.appendChild(preview);
+              });
+
+              if (rejected.length) {
+                imageCountNote.textContent = `Alguns arquivos foram ignorados (tipo inválido ou acima de ${MAX_FILE_SIZE_MB}MB): ${rejected.join(", ")}.`;
+              } else {
+                imageCountNote.textContent = validFiles.length
+                  ? `${validFiles.length} imagem(ns) selecionada(s). A prévia está pronta.`
+                  : "A prévia aparecerá aqui antes de você continuar.";
+              }
+            });
+          }
+
+          if (quoteForm) {
+            quoteForm.addEventListener("submit", () => {
+              const submitButton = quoteForm.querySelector(".quote-submit");
+              if (submitButton) {
+                submitButton.disabled = true;
+                submitButton.innerHTML = "Enviando orçamento…";
+              }
+            });
+          }
+        } catch (err) {
+          console.error("Erro no bloco do formulário de orçamento:", err);
         }
-      });
 
-      imageInput.addEventListener("change", () => {
-        previewGrid.innerHTML = "";
-        const files = Array.from(imageInput.files || []);
+        // --- Comparador antes/depois ---
+        try {
+          document.querySelectorAll(".before-after").forEach((comparison) => {
+            const range = comparison.querySelector(".before-after-range");
+            const overlayImage = comparison.querySelector(".before-after-overlay img");
+            if (!range || !overlayImage) return;
 
-        files.forEach((file) => {
-          const preview = document.createElement("div");
-          preview.className = "image-preview";
-          const image = document.createElement("img");
-          image.src = URL.createObjectURL(file);
-          image.alt = `Prévia de ${file.name}`;
-          image.onload = () => URL.revokeObjectURL(image.src);
-          preview.appendChild(image);
-          previewGrid.appendChild(preview);
-        });
+            const updateComparison = () => {
+              comparison.style.setProperty("--position", `${range.value}%`);
+              overlayImage.style.width = `${comparison.clientWidth}px`;
+            };
+            range.addEventListener("input", updateComparison);
+            window.addEventListener("resize", updateComparison);
+            updateComparison();
+          });
+        } catch (err) {
+          console.error("Erro no bloco do comparador antes/depois:", err);
+        }
 
-        imageCountNote.textContent = files.length
-          ? `${files.length} imagem(ns) selecionada(s). A prévia está pronta.`
-          : "A prévia aparecerá aqui antes de você continuar.";
-      });
+        // --- Lightbox de imagens ---
+        try {
+          const lightbox = document.querySelector("#image-lightbox");
+          const lightboxImage = document.querySelector("#lightbox-image");
+          const lightboxClose = document.querySelector(".lightbox-close");
 
-      document.querySelectorAll(".before-after").forEach((comparison) => {
-        const range = comparison.querySelector(".before-after-range");
-        const overlayImage = comparison.querySelector(".before-after-overlay img");
-        const updateComparison = () => {
-          comparison.style.setProperty("--position", `${range.value}%`);
-          overlayImage.style.width = `${comparison.clientWidth}px`;
-        };
-        range.addEventListener("input", updateComparison);
-        window.addEventListener("resize", updateComparison);
-        updateComparison();
-      });
+          if (lightbox && lightboxImage && lightboxClose) {
+            const closeLightbox = () => {
+              lightbox.classList.remove("is-open");
+              lightbox.setAttribute("aria-hidden", "true");
+              document.body.style.overflow = "";
+            };
 
-      const lightbox = document.querySelector("#image-lightbox");
-      const lightboxImage = document.querySelector("#lightbox-image");
-      const lightboxClose = document.querySelector(".lightbox-close");
+            document.querySelectorAll(".gallery-image img").forEach((image) => {
+              image.addEventListener("click", () => {
+                lightboxImage.src = image.currentSrc || image.src;
+                lightboxImage.alt = image.alt;
+                lightbox.classList.add("is-open");
+                lightbox.setAttribute("aria-hidden", "false");
+                document.body.style.overflow = "hidden";
+                lightboxClose.focus();
+              });
+            });
 
-      function closeLightbox() {
-        lightbox.classList.remove("is-open");
-        lightbox.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-      }
+            lightboxClose.addEventListener("click", closeLightbox);
+            lightbox.addEventListener("click", (event) => {
+              if (event.target === lightbox) closeLightbox();
+            });
+            document.addEventListener("keydown", (event) => {
+              if (event.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
+            });
+          }
+        } catch (err) {
+          console.error("Erro no bloco do lightbox:", err);
+        }
 
-      document.querySelectorAll(".gallery-image img").forEach((image) => {
-        image.addEventListener("click", () => {
-          lightboxImage.src = image.currentSrc || image.src;
-          lightboxImage.alt = image.alt;
-          lightbox.classList.add("is-open");
-          lightbox.setAttribute("aria-hidden", "false");
-          document.body.style.overflow = "hidden";
-          lightboxClose.focus();
-        });
-      });
-
-      lightboxClose.addEventListener("click", closeLightbox);
-      lightbox.addEventListener("click", (event) => {
-        if (event.target === lightbox) closeLightbox();
-      });
-      document.addEventListener("keydown", (event) => {
-        if (event.key === "Escape" && lightbox.classList.contains("is-open")) closeLightbox();
-      });
-
-      quoteForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const formData = new FormData(quoteForm);
-        const selectedFiles = Array.from(imageInput.files || []);
-        const fileNames = selectedFiles.length
-          ? selectedFiles.map((file) => file.name).join(", ")
-          : "Nenhuma imagem selecionada ainda";
-        const message = [
-          "Oi, Ana Vitória! Quero pedir um orçamento rápido.",
-          "",
-          `Nome: ${formData.get("nome")}`,
-          `Projeto: ${formData.get("projeto")}`,
-          `Quantidade de imagens: ${formData.get("quantidade")}`,
-          `Arquivos: ${fileNames}`,
-          `Detalhes: ${formData.get("mensagem")}`,
-        ].join("\n");
-
-        window.open(`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`, "_blank", "noopener,noreferrer");
+        // --- FAQ (acordeão nativo <details>, garante que só um item fique aberto por vez) ---
+        try {
+          const faqItems = document.querySelectorAll(".faq-item");
+          faqItems.forEach((item) => {
+            item.addEventListener("toggle", () => {
+              if (item.open) {
+                faqItems.forEach((other) => {
+                  if (other !== item) other.open = false;
+                });
+              }
+            });
+          });
+        } catch (err) {
+          console.error("Erro no bloco do FAQ:", err);
+        }
       });
     </script>
   </body>
